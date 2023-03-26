@@ -1,16 +1,6 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-
 const Navbar = () => (
-	<nav class='bg-white border-gray-200 px-2 sm:px-4 py-4 dark:bg-gray-900'>
-		<div class='container flex flex-wrap items-center justify-between mx-auto'>
-			<span class='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>
-				dApp Kit
-			</span>
-
-			<div class='flex md:order-2'>
-				<ConnectButton />
-			</div>
-		</div>
+	<nav className='bg-white flex flex-row w-full px-4 md:px-12 py-6 max-w-screen-2xl mx-auto border-2 border-red-500'>
+		<div className='flex justify-start items-center'></div>
 	</nav>
 );
 
