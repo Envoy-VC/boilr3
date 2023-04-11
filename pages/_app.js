@@ -60,10 +60,8 @@ export default function App({ Component, pageProps }) {
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider
 				chains={chains}
-				coolMode
 				theme={{
 					lightMode: lightTheme({ overlayBlur: 'small' }),
-					darkMode: darkTheme({ overlayBlur: 'small' }),
 				}}
 			>
 				<Component {...pageProps} />
