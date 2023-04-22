@@ -1,29 +1,32 @@
 import {
-	RainbowKitProvider,
 	connectorsForWallets,
-	darkTheme,
+	RainbowKitProvider,
 	lightTheme,
+	darkTheme,
 } from '@rainbow-me/rainbowkit';
+
 import {
+	injectedWallet,
 	metaMaskWallet,
 	trustWallet,
 	walletConnectWallet,
-	coinbaseWallet,
-	rainbowWallet,
 	ledgerWallet,
-	braveWallet,
-	argentWallet,
-	injectedWallet,
+	coinbaseWallet,
 } from '@rainbow-me/rainbowkit/wallets';
+
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, polygonMumbai, sepolia } from 'wagmi/chains';
+import { mainnet, polygon, sepolia, polygonMumbai } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
+
+import type { AppProps } from 'next/app';
 
 import '@/styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 
+const projectId = process.env.NEXT_PUBLIC_PROJECT_ID;
+
 const { chains, provider } = configureChains(
-	[mainnet, polygon, polygonMumbai, sepolia],
+	[mainnet, polygon, sepolia, polygonMumbai],
 	[publicProvider()]
 );
 
@@ -31,20 +34,17 @@ const connectors = connectorsForWallets([
 	{
 		groupName: 'Recommended',
 		wallets: [
-			metaMaskWallet({ chains }),
-			trustWallet({ chains }),
-			walletConnectWallet({ chains }),
+			injectedWallet({ chains }),
+			metaMaskWallet({ projectId, chains }),
+			walletConnectWallet({ projectId, chains }),
 		],
 	},
 	{
 		groupName: 'Others',
 		wallets: [
-			rainbowWallet({ chains }),
-			injectedWallet({ chains }),
-			braveWallet({ chains }),
-			coinbaseWallet({ chains, appName: 'dAppKit' }),
-			argentWallet({ chains }),
-			ledgerWallet({ chains }),
+			trustWallet({ projectId, chains }),
+			ledgerWallet({ projectId, chains }),
+			coinbaseWallet({ chains, appName: 'DAPP KIT' }),
 		],
 	},
 ]);
@@ -55,13 +55,18 @@ const wagmiClient = createClient({
 	provider,
 });
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }: AppProps) {
 	return (
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider
 				chains={chains}
 				theme={{
 					lightMode: lightTheme({ overlayBlur: 'small' }),
+					darkMode: darkTheme({ overlayBlur: 'small' }),
+				}}
+				appInfo={{
+					appName: 'DAPP KIT',
+					learnMoreUrl: 'https://github.com/Envoy-VC-dapp-kit',
 				}}
 			>
 				<Component {...pageProps} />
