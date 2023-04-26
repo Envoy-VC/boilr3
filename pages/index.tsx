@@ -1,40 +1,42 @@
 import Image from 'next/image';
 import Head from 'next/head';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { SITE_URL } from '@/utils/config';
 import { Inter } from 'next/font/google';
-import { Toaster, toast } from 'react-hot-toast';
-import {
-	useDisconnect,
-	useAccount,
-	useBalance,
-	useSignMessage,
-	useBlockNumber,
-} from 'wagmi';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
-	const { address } = useAccount();
-	const balance = useBalance({
-		address,
-		formatUnits: 'ether',
-		watch: true,
-	});
-	const message: string = `Welcome! Sign this message to confirm your address and start exploring our amazing decentralized application.\n\nAddress: ${address}`;
-	const { signMessage } = useSignMessage({
-		message,
-		onSuccess(data) {
-			console.log('Success', data);
-			toast.success('Signature Verification successful');
-		},
-		onError(error) {
-			console.log('Error', error);
-			toast.error('Signature Verification failed');
-		},
-	});
-	const { data, isError, isLoading } = useBlockNumber();
-	const { disconnect } = useDisconnect();
+	const origin =
+		typeof window !== 'undefined' && window.location.origin
+			? window.location.origin
+			: SITE_URL;
 
+	const links = [
+		{
+			title: 'Next.js',
+			description:
+				'Seamlessly integrate your decentralized application with Next.js, a popular React-based framework.',
+			href: 'https://nextjs.org',
+		},
+		{
+			title: 'RainbowKit',
+			description: 'A powerful and easy-to-use wallet Ethereum-based dApps.',
+			href: 'https://www.rainbowkit.com',
+		},
+		{
+			title: 'WAGMI',
+			description:
+				'wagmi is a collection of React Hooks containing everything you need to start working with Ethereum.',
+			href: 'https://wagmi.sh',
+		},
+		{
+			title: 'Examples',
+			description:
+				'Start by exploring some pre-built examples to inspire your creativity!',
+			href: `${origin}/examples`,
+		},
+	];
 	return (
 		<main
 			className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
@@ -42,7 +44,6 @@ export default function Home() {
 			<Head>
 				<title>boilr3: Next.js dApp Boilerplate</title>
 			</Head>
-			<Toaster position='bottom-left' reverseOrder={false} />
 			<div className='z-10 w-full max-w-7xl items-center justify-between font-mono text-sm lg:flex'>
 				<p className='fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30'>
 					Get started by editing&nbsp;
@@ -63,106 +64,26 @@ export default function Home() {
 					priority
 				/>
 			</div>
-			<div>
-				{address && (
-					<p className='flex flex-col justify-center mt-4 text-sm text-left text-gray-500 dark:text-gray-400 leading-8'>
-						<p className='left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:from-inherit static lg:w-auto  rounded-xl border bg-gray-200 p-4 dark:bg-zinc-800/30 my-8 lg:my-0'>
-							Address: {address}
-							<br />
-							Balance: {balance.data?.formatted} {balance.data?.symbol}
-							<br />
-							Block Number:{' '}
-							{isLoading ? 'Loading...' : isError ? 'Error' : data}
-						</p>
-						<div className='flex flex-col lg:flex-row'>
-							<button
-								className={`min-w-[144px] text-lg text-white rounded-3xl font-semibold mx-auto px-4 py-2 mt-8 bg-[#3898FF] ${inter.className}`}
-								onClick={() => signMessage()}
-							>
-								Sign Message
-							</button>
-							<button
-								className={`min-w-[144px] text-lg text-white rounded-3xl font-semibold mx-auto px-4 py-2 mt-8 bg-[#ff3535] ${inter.className}`}
-								onClick={() => disconnect()}
-							>
-								Disconnect
-							</button>
-						</div>
-					</p>
-				)}
-			</div>
-
 			<div className='mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left mt-24 lg:mt-0'>
-				<a
-					href='https://nextjs.org/'
-					className='group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2 className={`mb-3 text-2xl font-semibold`}>
-						Next.js{' '}
-						<span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
-							-&gt;
-						</span>
-					</h2>
-					<p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-						Seamlessly integrate your decentralized application with Next.js, a
-						popular React-based framework.
-					</p>
-				</a>
-
-				<a
-					href='https://www.rainbowkit.com/'
-					className='group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2 className={`mb-3 text-2xl font-semibold`}>
-						RainbowKit{' '}
-						<span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
-							-&gt;
-						</span>
-					</h2>
-					<p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-						A powerful and easy-to-use wallet authentication library for
-						Ethereum-based dApps.
-					</p>
-				</a>
-
-				<a
-					href='https://tailwindcss.com/'
-					className='group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2 className={`mb-3 text-2xl font-semibold`}>
-						Tailwind CSS{' '}
-						<span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
-							-&gt;
-						</span>
-					</h2>
-					<p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-						Effortlessly style your decentralized application with Tailwind CSS,
-						a utility-first CSS framework.
-					</p>
-				</a>
-
-				<a
-					href='https://github.com/Envoy-VC/boilr3.git'
-					className='group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
-					target='_blank'
-					rel='noopener noreferrer'
-				>
-					<h2 className={`mb-3 text-2xl font-semibold`}>
-						Boilerplate{' '}
-						<span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
-							-&gt;
-						</span>
-					</h2>
-					<p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-						Get started quickly with our feature-rich boilerplate.
-					</p>
-				</a>
+				{links.map((link, index) => (
+					<a
+						key={index}
+						href={link.href}
+						className='group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30'
+						target='_blank'
+						rel='noopener noreferrer'
+					>
+						<h2 className={`mb-3 text-2xl font-semibold`}>
+							{link.title}
+							<span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
+								-&gt;
+							</span>
+						</h2>
+						<p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
+							{link.description}
+						</p>
+					</a>
+				))}
 			</div>
 		</main>
 	);
