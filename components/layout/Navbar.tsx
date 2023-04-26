@@ -5,7 +5,7 @@ const Navbar = () => {
 	return (
 		<nav className='w-full bg-[#000000] border-b border-gray-800'>
 			<div className='max-w-7xl mx-auto'>
-				<div className='flex flex-row justify-between items-center py-6 px-12 lg:px-0'>
+				<div className='flex flex-row justify-between items-center py-6 px-12 xl:px-0'>
 					<div>
 						<Image
 							className='relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert'
