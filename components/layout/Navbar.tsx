@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Navbar = () => {
 	return (
-		<nav className='w-full bg-[#000000] border-b border-gray-800'>
+		<nav className='w-full border-b border-gray-800 bg-zinc-800/30 backdrop-blur-2xl bg-gradient-to-b from-zinc-200 dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:dark:bg-zinc-800/30'>
 			<div className='max-w-7xl mx-auto'>
 				<div className='flex flex-row justify-between items-center py-6 px-12 xl:px-0'>
 					<div>

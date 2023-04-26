@@ -10,3 +10,13 @@ export const SITE_URL = 'https://boilr3.vercel.app';
 
 export const SOCIAL_TWITTER = 'Envoy_1084';
 export const SOCIAL_GITHUB = 'Envoy-VC/boilr3';
+
+export const ironOptions = {
+	cookieName: SITE_NAME,
+	password:
+		process.env.SESSION_PASSWORD ??
+		'set_a_complex_password_at_least_32_characters_long',
+	cookieOptions: {
+		secure: process.env.NODE_ENV === 'production',
+	},
+};

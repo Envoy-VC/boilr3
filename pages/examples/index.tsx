@@ -15,6 +15,13 @@ const examples = [
 		href: '/examples/sign',
 		icon: '/icons/sign.png',
 	},
+	{
+		title: 'Sign-in with Ethereum',
+		description:
+			'Experience the power of secure communication with Sign-In with Ethereum (SIWE), an EIP-4361 authentication standard that creates user sessions based on wallet connections and more!',
+		href: '/examples/siwe',
+		icon: '/icons/siwe.png',
+	},
 ];
 
 const Examples = () => {

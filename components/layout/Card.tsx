@@ -9,7 +9,7 @@ interface Props {
 
 const Card = (props: Props) => {
 	return (
-		<div className='w-full max-w-xl block max-h-screen-md rounded-[18px] border border-gray-800 bg-black p-4 shadow-xl sm:p-6 lg:p-8'>
+		<div className='w-full max-w-xl block min-h-[300px] rounded-[18px] border border-gray-800 bg-black p-4 shadow-xl sm:p-6 lg:p-8'>
 			<Image
 				src={props.icon}
 				alt={`${props.title} Icon`}

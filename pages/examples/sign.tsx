@@ -4,7 +4,7 @@ import { useAccount, useSignMessage } from 'wagmi';
 import { verifyMessage } from 'ethers/lib/utils';
 import toast, { Toaster } from 'react-hot-toast';
 
-import { Navbar, HeadingComponent } from '@/components/layout';
+import { Navbar, HeadingComponent, CustomButton } from '@/components/layout';
 import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -51,12 +51,12 @@ const Sign = () => {
 						onChange={(e) => setMessage(e.target.value)}
 						className={`w-full max-w-2xl h-36 bg-[#202020] mt-12 rounded-xl border-2 border-gray-600 p-2 text-white outline-none ${inter.className}`}
 					/>
-					<button
-						className={`w-full max-w-[200px] text-lg text-white rounded-3xl font-semibold px-4 py-2 mt-8 bg-[#3898FF] ${inter.className}`}
-						onClick={() => signMessage.signMessage()}
-					>
-						Sign Message
-					</button>
+
+					<CustomButton
+						text='Sign Message'
+						type='blue'
+						handleClick={signMessage.signMessage}
+					/>
 					{signMessage.data && (
 						<div
 							className={`${inter.className} w-full max-w-3xl text-[16px] pt-8 leading-7 break-all`}
