@@ -37,12 +37,12 @@ const Sign = () => {
 	});
 	return (
 		<div>
-			<NextSeo title='Sign & Verify message' />
+			<NextSeo title='Sign Message' />
 			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>
 				<HeadingComponent
-					title='Sign and Verify message'
+					title='Sign and verify message'
 					description={`WAGMI hooks provide a streamlined approach to signing and verifying messages using Ethereum accounts. By integrating these hooks into your application, users can sign in with their Ethereum account, ensuring a secure and decentralized authentication process. To sign a message, the user's Ethereum address is used in conjunction with their private key. The hook generates a unique signature for the message, which can later be verified by ethers. This process ensures that the message's origin is authenticated, and the sender's identity is confirmed without exposing their private key.`}
 				/>
 				<div className='flex flex-col justify-start'>

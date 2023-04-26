@@ -1,4 +1,5 @@
 import React from 'react';
+import { NextSeo } from 'next-seo';
 import { Navbar } from '@/components/layout';
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
@@ -18,6 +19,7 @@ const examples = [
 const Examples = () => {
 	return (
 		<div>
+			<NextSeo title='Examples' />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>
 				<h2 className={`${inter.className} text-[36px] font-semibold`}>
