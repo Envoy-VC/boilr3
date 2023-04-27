@@ -22,6 +22,13 @@ const examples = [
 		href: '/examples/siwe',
 		icon: '/icons/siwe.png',
 	},
+	{
+		title: 'Fetch ENS Names',
+		description:
+			'Fetch Ethereum Name Service names to Ethereum addresses using a decentralized domain name system that maps human-readable names to addresses.',
+		href: '/examples/ens',
+		icon: '/icons/ens.png',
+	},
 ];
 
 const Examples = () => {
