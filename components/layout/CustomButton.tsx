@@ -9,7 +9,9 @@ interface Props {
 	text: string;
 	type: btnType;
 	className?: string;
-	handleClick: () => void;
+	submit?: boolean;
+	disabled?: boolean;
+	handleClick: () => any;
 }
 
 const CustomButton = (props: Props) => {
@@ -21,6 +23,8 @@ const CustomButton = (props: Props) => {
 				props.className
 			}`}
 			onClick={() => props.handleClick()}
+			type={`${props.submit ? 'submit' : 'button'}`}
+			disabled={props.disabled ? props.disabled : false}
 		>
 			{props.text}
 		</button>

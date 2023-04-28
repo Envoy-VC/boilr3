@@ -29,6 +29,13 @@ const examples = [
 		href: '/examples/ens',
 		icon: '/icons/ens.png',
 	},
+	{
+		title: 'Send Ether',
+		description:
+			'Send ether to another Ethereum address with a basic transaction.',
+		href: '/examples/send-ether',
+		icon: '/icons/ether.png',
+	},
 ];
 
 const Examples = () => {
