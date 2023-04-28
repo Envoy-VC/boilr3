@@ -36,6 +36,13 @@ const examples = [
 		href: '/examples/send-ether',
 		icon: '/icons/ether.png',
 	},
+	{
+		title: 'Send ERC20',
+		description:
+			' ERC20 is a standard for fungible tokens on the Ethereum network. The example includes a tutorial on how to interact with a deployed ERC20 token contract.',
+		href: '/examples/send-erc20',
+		icon: '/icons/erc20.png',
+	},
 ];
 
 const Examples = () => {

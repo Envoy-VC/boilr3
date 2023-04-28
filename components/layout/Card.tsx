@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Props {
 	icon: string;
@@ -16,11 +17,11 @@ const Card = (props: Props) => {
 				width={100}
 				height={100}
 			/>
-			<a href={props.href}>
+			<Link href={props.href}>
 				<h3 className='mt-3 text-lg font-bold text-white sm:text-xl hover:underline'>
 					{props.title}
 				</h3>
-			</a>
+			</Link>
 			<p className='mt-4 text-sm text-gray-300'>{props.description}</p>
 		</div>
 	);
