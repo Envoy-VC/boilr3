@@ -43,6 +43,13 @@ const examples = [
 		href: '/examples/send-erc20',
 		icon: '/icons/erc20.png',
 	},
+	{
+		title: 'Mint NFT',
+		description:
+			'NFTs are unique digital assets that can represent things like artwork, collectibles, and other unique items.',
+		href: '/examples/mint-nft',
+		icon: '/icons/nft.png',
+	},
 ];
 
 const Examples = () => {

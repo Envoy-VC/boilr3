@@ -11,6 +11,9 @@ export const SITE_URL = 'https://boilr3.vercel.app';
 export const SOCIAL_TWITTER = 'Envoy_1084';
 export const SOCIAL_GITHUB = 'Envoy-VC/boilr3';
 
+export const NFT_CONTRACT_ADDRESS =
+	'0x0Fc5f8A784810dEd101BD734cC59F6F7b868A3AF';
+
 export const ironOptions = {
 	cookieName: SITE_NAME,
 	password:

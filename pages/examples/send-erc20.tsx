@@ -46,9 +46,6 @@ function SendTransaction() {
 				? utils.parseEther(debouncedAmount[0])
 				: utils.parseEther('0'),
 		],
-		onSettled(data, error) {
-			console.log(data, error);
-		},
 	});
 	const contractWrite = useContractWrite({
 		...prepareContractWrite.config,
