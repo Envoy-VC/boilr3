@@ -58,19 +58,21 @@ function SendTransaction() {
 		onSettled() {
 			balance.refetch();
 		},
-		onSuccess() {
-			toast.success('Transaction Sent');
-		},
 	});
 
 	return (
 		<div className='flex flex-col justify-start'>
-			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
 			<form
 				className='flex flex-col justify-start'
 				onSubmit={(e) => {
 					e.preventDefault();
-					contractWrite.write?.();
+					contractWrite.writeAsync?.().then((res) => {
+						toast.promise(res.wait(), {
+							loading: 'Waiting for confirmation',
+							success: 'Transaction Successful',
+							error: 'Transaction failed',
+						});
+					});
 				}}
 			>
 				<input
@@ -100,7 +102,7 @@ function SendTransaction() {
 				<button
 					className={`w-full max-w-[200px] text-lg text-white rounded-3xl font-semibold px-4 py-2 mt-8 ${inter.className} bg-[#3898FF]`}
 					disabled={
-						!contractWrite.write ||
+						!contractWrite.writeAsync ||
 						waitForTransaction.isLoading ||
 						!to ||
 						!amount
@@ -137,7 +139,7 @@ function SendTransaction() {
 						</div>
 					</div>
 				)}
-				{waitForTransaction.isError && (
+				{waitForTransaction.isError && waitForTransaction.isIdle && (
 					<div
 						className={`${inter.className} w-full max-w-3xl text-[16px] pt-8 leading-7 break-all`}
 					>
@@ -155,7 +157,7 @@ const ERC20Example = () => {
 	return (
 		<div>
 			<NextSeo title='Send ERC-20' />
-			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
+			<Toaster position='bottom-left' />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>
 				<HeadingComponent

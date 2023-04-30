@@ -31,7 +31,7 @@ function SendTransaction() {
 		},
 	});
 
-	const { data, sendTransaction } = useSendTransaction({
+	const { data, sendTransactionAsync } = useSendTransaction({
 		...config,
 		onError() {
 			toast.error('User Rejected Transaction');
@@ -40,22 +40,21 @@ function SendTransaction() {
 
 	const { isLoading, isSuccess } = useWaitForTransaction({
 		hash: data?.hash,
-		onSuccess(data) {
-			toast.success('Transaction Successful');
-		},
-		onError() {
-			toast.error('Transaction Failed');
-		},
 	});
 
 	return (
 		<div className='flex flex-col justify-start'>
-			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
 			<form
 				className='flex flex-col justify-start'
 				onSubmit={(e) => {
 					e.preventDefault();
-					sendTransaction?.();
+					sendTransactionAsync?.().then((res) => {
+						toast.promise(res.wait(), {
+							loading: 'Waiting for confirmation',
+							success: 'Transaction Successful',
+							error: 'Transaction failed',
+						});
+					});
 				}}
 			>
 				<input
@@ -76,7 +75,7 @@ function SendTransaction() {
 				/>
 				<button
 					className={`w-full max-w-[200px] text-lg text-white rounded-3xl font-semibold px-4 py-2 mt-8 ${inter.className} bg-[#3898FF]`}
-					disabled={isLoading || !sendTransaction || !to || !amount}
+					disabled={isLoading || !sendTransactionAsync || !to || !amount}
 					type='submit'
 				>
 					Send
@@ -108,7 +107,7 @@ const SendEtherExample = () => {
 	return (
 		<div>
 			<NextSeo title='Send Ether' />
-			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
+			<Toaster position='bottom-left' />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>
 				<HeadingComponent
