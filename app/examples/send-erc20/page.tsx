@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import { Toaster, toast } from 'react-hot-toast';
 import { useDebounce } from 'use-debounce';

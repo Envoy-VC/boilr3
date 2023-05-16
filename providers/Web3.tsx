@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable react/no-children-prop */
 import {
 	connectorsForWallets,
@@ -65,11 +67,12 @@ const Web3Provider = (props: Props) => {
 					darkMode: darkTheme({ overlayBlur: 'small' }),
 				}}
 				appInfo={{
-					appName: 'DAPP KIT',
-					learnMoreUrl: 'https://github.com/Envoy-VC-dapp-kit',
+					appName: 'boilr3',
+					learnMoreUrl: 'https://github.com/Envoy-VC/boilr3',
 				}}
-				children={props.children}
-			></RainbowKitProvider>
+			>
+				{props.children}
+			</RainbowKitProvider>
 		</WagmiConfig>
 	);
 };

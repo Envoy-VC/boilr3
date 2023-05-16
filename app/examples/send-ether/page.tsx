@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import { Toaster, toast } from 'react-hot-toast';

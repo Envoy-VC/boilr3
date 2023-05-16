@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { NextSeo } from 'next-seo';
 import { useEnsAddress } from 'wagmi';
@@ -8,7 +10,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 const ENS = () => {
-	const [name, setName] = useState<string>('');
+	const [name, setName] = useState<string>();
 	const [ensAddress, setEnsAddress] = useState<string>('');
 	const ens = useEnsAddress({
 		name: name,

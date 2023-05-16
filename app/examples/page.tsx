@@ -1,11 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
-import { NextSeo } from 'next-seo';
 import { Navbar } from '@/components/layout';
+import Card from '@/components/layout/Card';
+
 import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
-
-import Card from '@/components/layout/Card';
 
 const examples = [
 	{
@@ -55,7 +54,6 @@ const examples = [
 const Examples = () => {
 	return (
 		<div>
-			<NextSeo title='Examples' />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>
 				<h2 className={`${inter.className} text-[36px] font-semibold`}>

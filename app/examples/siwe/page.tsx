@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
 import { NextSeo } from 'next-seo';
 import toast, { Toaster } from 'react-hot-toast';
@@ -48,6 +50,7 @@ const SIWE = () => {
 			// Step 1: Get Random nonce
 			const nonceRes = await fetch('/api/siwe/nonce');
 			const nonce = await nonceRes.text();
+			console.log(nonce);
 
 			// Step 2: Create SIWE Message
 			const message = new SiweMessage({
