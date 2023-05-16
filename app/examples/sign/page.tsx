@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { NextSeo } from 'next-seo';
 import { useAccount, useSignMessage } from 'wagmi';
 import { verifyMessage } from 'ethers/lib/utils';
 import toast, { Toaster } from 'react-hot-toast';
@@ -39,7 +38,6 @@ const Sign = () => {
 	});
 	return (
 		<div>
-			<NextSeo title='Sign Message' />
 			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>

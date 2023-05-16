@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { NextSeo } from 'next-seo';
 import { useEnsAddress } from 'wagmi';
 import { Toaster, toast } from 'react-hot-toast';
 import { Navbar, HeadingComponent, CustomButton } from '@/components/layout';
@@ -30,7 +29,6 @@ const ENS = () => {
 	};
 	return (
 		<div>
-			<NextSeo title='Fetch ENS' />
 			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>

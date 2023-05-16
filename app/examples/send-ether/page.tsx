@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { NextSeo } from 'next-seo';
 import { Toaster, toast } from 'react-hot-toast';
 import { useDebounce } from 'use-debounce';
 import {
@@ -108,7 +107,6 @@ function SendTransaction() {
 const SendEtherExample = () => {
 	return (
 		<div>
-			<NextSeo title='Send Ether' />
 			<Toaster position='bottom-left' />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>
