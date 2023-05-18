@@ -19,7 +19,7 @@ import {
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { ETH_CHAINS, WALLET_CONNECT_PROJECT_ID } from '@/utils/config';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -58,6 +58,8 @@ const wagmiClient = createClient({
 });
 
 const Web3Provider = (props: Props) => {
+	const [mounted, setMounted] = React.useState(false);
+	React.useEffect(() => setMounted(true), []);
 	return (
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider
@@ -71,7 +73,7 @@ const Web3Provider = (props: Props) => {
 					learnMoreUrl: 'https://github.com/Envoy-VC/boilr3',
 				}}
 			>
-				{props.children}
+				{mounted && props.children}
 			</RainbowKitProvider>
 		</WagmiConfig>
 	);

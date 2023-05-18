@@ -1,8 +1,11 @@
-'use client';
-
 import '../styles/globals.css';
 import Web3Provider from '@/providers/Web3';
 import { SITE_NAME, SITE_DESCRIPTION } from '@/utils/config';
+
+export const metadata = {
+	title: SITE_NAME,
+	description: SITE_DESCRIPTION,
+};
 
 export default function RootLayout({
 	children,
@@ -13,9 +16,6 @@ export default function RootLayout({
 		<html>
 			<head>
 				<meta charSet='utf-8' />
-				<title>{SITE_NAME}</title>
-				<meta name='description' content={SITE_DESCRIPTION} />
-
 				<link
 					rel='apple-touch-icon'
 					sizes='180x180'
