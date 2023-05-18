@@ -1,3 +1,5 @@
+'use client';
+
 import {
 	useAccount,
 	useContractWrite,
@@ -8,7 +10,6 @@ import {
 import { polygonMumbai } from 'wagmi/chains';
 import { NFT_CONTRACT_ADDRESS } from '@/utils/config';
 
-import { NextSeo } from 'next-seo';
 import { Toaster, toast } from 'react-hot-toast';
 
 import { Inter } from 'next/font/google';
@@ -110,7 +111,6 @@ export default function MintNFTExample() {
 	const { isConnected } = useAccount();
 	return (
 		<div>
-			<NextSeo title='Mint NFT' />
 			<Toaster position='bottom-left' />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>

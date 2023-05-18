@@ -1,13 +1,21 @@
-import { Html, Head, Main, NextScript } from 'next/document';
+import '../styles/globals.css';
+import Web3Provider from '@/providers/Web3';
+import { SITE_NAME, SITE_DESCRIPTION } from '@/utils/config';
 
-export default function Document() {
+export const metadata = {
+	title: SITE_NAME,
+	description: SITE_DESCRIPTION,
+};
+
+export default function RootLayout({
+	children,
+}: {
+	children: React.ReactNode;
+}) {
 	return (
-		<Html lang='en'>
-			<Head>
-				{/* Character Set */}
+		<html>
+			<head>
 				<meta charSet='utf-8' />
-
-				{/* Favicon */}
 				<link
 					rel='apple-touch-icon'
 					sizes='180x180'
@@ -27,16 +35,14 @@ export default function Document() {
 				/>
 				<link rel='manifest' href='/favicon/site.webmanifest' />
 
-				{/* Robots Search Indexing */}
 				<meta
 					name='robots'
 					content='follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large'
 				/>
-			</Head>
+			</head>
 			<body>
-				<Main />
-				<NextScript />
+				<Web3Provider>{children}</Web3Provider>
 			</body>
-		</Html>
+		</html>
 	);
 }

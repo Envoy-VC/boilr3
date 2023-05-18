@@ -1,5 +1,6 @@
+'use client';
+
 import React, { useEffect, useState } from 'react';
-import { NextSeo } from 'next-seo';
 import toast, { Toaster } from 'react-hot-toast';
 import { useAccount, useNetwork, useSignMessage } from 'wagmi';
 import { SiweMessage } from 'siwe';
@@ -48,6 +49,7 @@ const SIWE = () => {
 			// Step 1: Get Random nonce
 			const nonceRes = await fetch('/api/siwe/nonce');
 			const nonce = await nonceRes.text();
+			console.log(nonce);
 
 			// Step 2: Create SIWE Message
 			const message = new SiweMessage({
@@ -94,7 +96,6 @@ const SIWE = () => {
 
 	return (
 		<div>
-			<NextSeo title='SIWE' />
 			<Toaster position='bottom-left' toastOptions={{ duration: 5000 }} />
 			<Navbar />
 			<section className='max-w-7xl bg-black mx-auto my-24 px-12 xl:px-0 text-[#EDEEEE]'>

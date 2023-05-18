@@ -1,13 +1,14 @@
+'use client';
+
 import Image from 'next/image';
-import Head from 'next/head';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '@/utils/config';
+import { SITE_URL } from '@/utils/config';
 import { Inter } from 'next/font/google';
 import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+export default function Page() {
 	const origin =
 		typeof window !== 'undefined' && window.location.origin
 			? window.location.origin
@@ -42,11 +43,6 @@ export default function Home() {
 		<main
 			className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
 		>
-			<Head>
-				<title>{SITE_NAME}</title>
-				<meta name='description' content={SITE_DESCRIPTION} />
-				<meta name='viewport' content='width=device-width, initial-scale=1' />
-			</Head>
 			<div className='z-10 w-full max-w-7xl items-center justify-between font-mono text-sm lg:flex'>
 				<p className='fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30'>
 					Get started by editing&nbsp;
@@ -77,8 +73,8 @@ export default function Home() {
 					>
 						<h2 className={`mb-3 text-2xl font-semibold`}>
 							{link.title}
-							<span className='inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
-								-&gt;
+							<span className='inline-block pl-1 transition-transform group-hover:translate-x-1 motion-reduce:transform-none'>
+								&rarr;
 							</span>
 						</h2>
 						<p className={`m-0 max-w-[30ch] text-sm opacity-50`}>

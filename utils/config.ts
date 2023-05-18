@@ -1,7 +1,8 @@
 import { mainnet, polygon, sepolia, polygonMumbai } from 'wagmi/chains';
 
 export const ETH_CHAINS = [mainnet, polygon, sepolia, polygonMumbai];
-export const WALLET_CONNECT_PROJECT_ID = 'YOUR_WALLET_CONNECT_PROJECT_ID';
+export const WALLET_CONNECT_PROJECT_ID =
+	process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '';
 
 export const SITE_NAME = 'boilr3';
 export const SITE_DESCRIPTION =

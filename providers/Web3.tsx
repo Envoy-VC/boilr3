@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable react/no-children-prop */
 import {
 	connectorsForWallets,
@@ -17,7 +19,7 @@ import {
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 import { ETH_CHAINS, WALLET_CONNECT_PROJECT_ID } from '@/utils/config';
 import '@rainbow-me/rainbowkit/styles.css';
@@ -56,6 +58,8 @@ const wagmiClient = createClient({
 });
 
 const Web3Provider = (props: Props) => {
+	const [mounted, setMounted] = React.useState(false);
+	React.useEffect(() => setMounted(true), []);
 	return (
 		<WagmiConfig client={wagmiClient}>
 			<RainbowKitProvider
@@ -65,11 +69,12 @@ const Web3Provider = (props: Props) => {
 					darkMode: darkTheme({ overlayBlur: 'small' }),
 				}}
 				appInfo={{
-					appName: 'DAPP KIT',
-					learnMoreUrl: 'https://github.com/Envoy-VC-dapp-kit',
+					appName: 'boilr3',
+					learnMoreUrl: 'https://github.com/Envoy-VC/boilr3',
 				}}
-				children={props.children}
-			></RainbowKitProvider>
+			>
+				{mounted && props.children}
+			</RainbowKitProvider>
 		</WagmiConfig>
 	);
 };
