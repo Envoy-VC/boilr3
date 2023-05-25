@@ -3,12 +3,12 @@ import { NextSeo } from 'next-seo';
 import { Toaster, toast } from 'react-hot-toast';
 import { useDebounce } from 'use-debounce';
 import {
+	useAccount,
 	useNetwork,
-	usePrepareSendTransaction,
 	useSendTransaction,
 	useWaitForTransaction,
 } from 'wagmi';
-import { utils } from 'ethers';
+import { parseEther } from 'viem';
 
 import { Navbar, HeadingComponent } from '@/components/layout';
 import { Inter } from 'next/font/google';
@@ -23,23 +23,18 @@ function SendTransaction() {
 	const [debouncedAmount] = useDebounce(amount, 500);
 
 	const { chain } = useNetwork();
+	const { address } = useAccount();
 
-	const { config } = usePrepareSendTransaction({
-		request: {
-			to: debouncedTo,
-			value: debouncedAmount ? utils.parseEther(debouncedAmount) : undefined,
-		},
-	});
-
-	const { data, sendTransactionAsync } = useSendTransaction({
-		...config,
-		onError() {
-			toast.error('User Rejected Transaction');
-		},
+	const sendTransaction = useSendTransaction({
+		account: address,
+		to: debouncedTo,
+		value: debouncedAmount
+			? parseEther(debouncedAmount as `${number}`)
+			: undefined,
 	});
 
 	const { isLoading, isSuccess } = useWaitForTransaction({
-		hash: data?.hash,
+		hash: sendTransaction.data?.hash,
 	});
 
 	return (
@@ -48,13 +43,7 @@ function SendTransaction() {
 				className='flex flex-col justify-start'
 				onSubmit={(e) => {
 					e.preventDefault();
-					sendTransactionAsync?.().then((res) => {
-						toast.promise(res.wait(), {
-							loading: 'Waiting for confirmation',
-							success: 'Transaction Successful',
-							error: 'Transaction failed',
-						});
-					});
+					sendTransaction.sendTransactionAsync?.();
 				}}
 			>
 				<input
@@ -75,10 +64,20 @@ function SendTransaction() {
 				/>
 				<button
 					className={`w-full max-w-[200px] text-lg text-white rounded-3xl font-semibold px-4 py-2 mt-8 ${inter.className} bg-[#3898FF]`}
-					disabled={isLoading || !sendTransactionAsync || !to || !amount}
+					disabled={
+						isLoading ||
+						sendTransaction.isLoading ||
+						!sendTransaction.sendTransaction ||
+						!to ||
+						!amount
+					}
 					type='submit'
 				>
-					Send
+					{isLoading
+						? 'Sending...'
+						: sendTransaction.isLoading
+						? 'Check your wallet'
+						: 'Send'}
 				</button>
 			</form>
 			{isSuccess && (
@@ -89,7 +88,7 @@ function SendTransaction() {
 					<div>
 						View Transaction on{'  '}
 						<a
-							href={`${chain?.blockExplorers?.default.url}/tx/${data?.hash}`}
+							href={`${chain?.blockExplorers?.default.url}/tx/${sendTransaction.data?.hash}`}
 							target='_blank'
 							rel='noopener noreferrer'
 							className='hover:underline text-blue-500'
