@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NextSeo } from 'next-seo';
-import { useEnsAddress } from 'wagmi';
+import { fetchEnsAddress, fetchEnsName } from '@wagmi/core';
 import { Toaster, toast } from 'react-hot-toast';
 import { Navbar, HeadingComponent, CustomButton } from '@/components/layout';
 import { Inter } from 'next/font/google';
@@ -8,24 +8,31 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 const ENS = () => {
-	const [name, setName] = useState<string>('');
-	const [ensAddress, setEnsAddress] = useState<string>('');
-	const ens = useEnsAddress({
-		name: name,
-		enabled: false,
-		suspense: true,
-		onSuccess(data) {
-			setEnsAddress(String(data));
-		},
-	});
+	const [status, setStatus] = useState<'idle' | 'fetching'>('idle');
+	const [input, setInput] = useState('');
+	const [resolved, setResolved] = useState('');
 
-	const fetchENS = () => {
-		if (!name) {
-			toast.error('Please Enter ENS Name');
-			return;
+	async function submit() {
+		try {
+			setStatus('fetching');
+			if (input.endsWith('.eth')) {
+				let resolvedENS = await fetchEnsAddress({
+					name: input,
+				});
+				setResolved(String(resolvedENS));
+			} else {
+				let resolvedAddress = await fetchEnsName({
+					address: input as `0x{string}`,
+				});
+				setResolved(String(resolvedAddress));
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setStatus('idle');
 		}
-		ens.refetch();
-	};
+	}
+
 	return (
 		<div>
 			<NextSeo title='Fetch ENS' />
@@ -39,17 +46,22 @@ const ENS = () => {
 				<div className='flex flex-col justify-start'>
 					<input
 						type='text'
-						placeholder='vitalik.eth'
+						placeholder='vitalik.eth/0xAb5...C9B'
 						required
-						onChange={(e) => setName(e.target.value)}
+						onChange={(e) => setInput(e.target.value)}
 						className={`w-full max-w-sm bg-[#202020] mt-12 rounded-xl border-2 border-gray-600 p-2 ps-4 text-white outline-none ${inter.className}`}
 					/>
-					<CustomButton type='blue' text='Fetch' handleClick={fetchENS} />
-					{ensAddress && (
+					<CustomButton
+						type='blue'
+						text={status === 'idle' ? 'Fetch' : 'Fetching...'}
+						handleClick={submit}
+						disabled={status === 'fetching'}
+					/>
+					{resolved && (
 						<div
 							className={`${inter.className} w-full max-w-3xl text-[16px] pt-8 leading-7 break-all`}
 						>
-							<b>Address</b>: {ensAddress}
+							<b>Resolved ENS/Address</b>: {resolved}
 						</div>
 					)}
 				</div>
