@@ -1,4 +1,5 @@
 /* eslint-disable react/no-children-prop */
+import '@rainbow-me/rainbowkit/styles.css';
 import {
 	connectorsForWallets,
 	RainbowKitProvider,
@@ -14,13 +15,12 @@ import {
 	coinbaseWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 
 import { ReactNode } from 'react';
 
 import { ETH_CHAINS, WALLET_CONNECT_PROJECT_ID } from '@/utils/config';
-import '@rainbow-me/rainbowkit/styles.css';
 
 interface Props {
 	children: ReactNode;
@@ -28,7 +28,9 @@ interface Props {
 
 const projectId = WALLET_CONNECT_PROJECT_ID;
 
-const { chains, provider } = configureChains(ETH_CHAINS, [publicProvider()]);
+const { chains, publicClient } = configureChains(ETH_CHAINS, [
+	publicProvider(),
+]);
 
 const connectors = connectorsForWallets([
 	{
@@ -49,15 +51,15 @@ const connectors = connectorsForWallets([
 	},
 ]);
 
-const wagmiClient = createClient({
+const config = createConfig({
 	autoConnect: true,
 	connectors,
-	provider,
+	publicClient,
 });
 
 const Web3Provider = (props: Props) => {
 	return (
-		<WagmiConfig client={wagmiClient}>
+		<WagmiConfig config={config}>
 			<RainbowKitProvider
 				chains={chains}
 				theme={{
