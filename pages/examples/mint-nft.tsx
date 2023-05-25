@@ -37,7 +37,6 @@ function MintNFT() {
 		],
 		functionName: 'safeMint',
 		args: [address ? address : '0x0'],
-		value: parseEther('0'),
 	});
 
 	const contractWrite = useContractWrite({
