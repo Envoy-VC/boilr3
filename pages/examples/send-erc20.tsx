@@ -14,7 +14,7 @@ import {
 
 import { Navbar, HeadingComponent } from '@/components/layout';
 import { Inter } from 'next/font/google';
-import { utils } from 'ethers';
+import { parseEther } from 'viem';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -43,8 +43,8 @@ function SendTransaction() {
 		args: [
 			(debouncedTo[0] as `0x{string}`) ?? '0x0',
 			debouncedAmount[0]
-				? utils.parseEther(debouncedAmount[0])
-				: utils.parseEther('0'),
+				? parseEther(debouncedAmount[0] as `${number}`)
+				: parseEther('0'),
 		],
 	});
 	const contractWrite = useContractWrite({
@@ -66,13 +66,7 @@ function SendTransaction() {
 				className='flex flex-col justify-start'
 				onSubmit={(e) => {
 					e.preventDefault();
-					contractWrite.writeAsync?.().then((res) => {
-						toast.promise(res.wait(), {
-							loading: 'Waiting for confirmation',
-							success: 'Transaction Successful',
-							error: 'Transaction failed',
-						});
-					});
+					contractWrite.writeAsync?.();
 				}}
 			>
 				<input

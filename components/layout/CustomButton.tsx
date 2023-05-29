@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
 
-type btnType = 'blue' | 'red';
+type btnType = 'blue' | 'red' | 'grey';
 
 interface Props {
 	text: string;
@@ -19,9 +19,13 @@ const CustomButton = (props: Props) => {
 		<button
 			className={`w-full max-w-[200px] text-lg text-white rounded-3xl font-semibold px-4 py-2 mt-8 ${
 				inter.className
-			} ${props.type === 'blue' ? 'bg-[#3898FF]' : 'bg-[#ff3838]'} ${
-				props.className
-			}`}
+			} ${
+				props.type === 'blue'
+					? 'bg-[#3898FF]'
+					: props.type === 'red'
+					? 'bg-[#ff3838]'
+					: 'bg-slate-500'
+			} ${props.className}`}
 			onClick={() => props.handleClick()}
 			type={`${props.submit ? 'submit' : 'button'}`}
 			disabled={props.disabled ? props.disabled : false}

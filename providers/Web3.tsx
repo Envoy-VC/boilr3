@@ -1,4 +1,5 @@
 /* eslint-disable react/no-children-prop */
+import '@rainbow-me/rainbowkit/styles.css';
 import {
 	connectorsForWallets,
 	RainbowKitProvider,
@@ -14,22 +15,12 @@ import {
 	coinbaseWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
-
-import {
-	PaperEmbeddedWalletRainbowKitWallet as paperWallet,
-	PaperEmbeddedWalletRainbowKitWalletProps,
-} from '@paperxyz/embedded-wallet-service-rainbowkit';
 
 import { ReactNode } from 'react';
 
-import {
-	ETH_CHAINS,
-	WALLET_CONNECT_PROJECT_ID,
-	PAPER_CLIENT_ID,
-} from '@/utils/config';
-import '@rainbow-me/rainbowkit/styles.css';
+import { ETH_CHAINS, WALLET_CONNECT_PROJECT_ID } from '@/utils/config';
 
 interface Props {
 	children: ReactNode;
@@ -37,21 +28,12 @@ interface Props {
 
 const projectId = WALLET_CONNECT_PROJECT_ID;
 
-const paperConfig: PaperEmbeddedWalletRainbowKitWalletProps = {
-	name: 'Paper Wallet',
-	chain: 'Ethereum',
-	clientId: PAPER_CLIENT_ID,
-};
-
-const { chains, provider, webSocketProvider } = configureChains(ETH_CHAINS, [
-	publicProvider(),
-]);
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+	ETH_CHAINS,
+	[publicProvider()]
+);
 
 const connectors = connectorsForWallets([
-	{
-		groupName: 'Log In With Email',
-		wallets: [paperWallet(paperConfig)],
-	},
 	{
 		groupName: 'Recommended',
 		wallets: [
@@ -70,16 +52,16 @@ const connectors = connectorsForWallets([
 	},
 ]);
 
-const wagmiClient = createClient({
+const wagmiConfig = createConfig({
 	autoConnect: true,
 	connectors,
-	provider,
-	webSocketProvider,
+	publicClient,
+	webSocketPublicClient,
 });
 
 const Web3Provider = (props: Props) => {
 	return (
-		<WagmiConfig client={wagmiClient}>
+		<WagmiConfig config={wagmiConfig}>
 			<RainbowKitProvider
 				chains={chains}
 				theme={{

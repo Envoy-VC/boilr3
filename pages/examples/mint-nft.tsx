@@ -6,6 +6,7 @@ import {
 	useNetwork,
 } from 'wagmi';
 import { polygonMumbai } from 'wagmi/chains';
+import { parseEther } from 'viem';
 import { NFT_CONTRACT_ADDRESS } from '@/utils/config';
 
 import { NextSeo } from 'next-seo';
@@ -31,6 +32,7 @@ function MintNFT() {
 				name: 'safeMint',
 				stateMutability: 'nonpayable',
 				type: 'function',
+				outputs: [],
 			},
 		],
 		functionName: 'safeMint',
@@ -54,18 +56,12 @@ function MintNFT() {
 				className='flex flex-col justify-start'
 				onSubmit={(e) => {
 					e.preventDefault();
-					contractWrite.writeAsync?.().then((res) => {
-						toast.promise(res.wait(), {
-							loading: 'Waiting for confirmation',
-							success: 'Transaction Successful',
-							error: 'Transaction failed',
-						});
-					});
+					contractWrite.writeAsync?.();
 				}}
 			>
 				<button
 					className={`w-full max-w-[200px] text-lg text-white rounded-3xl font-semibold px-4 py-2 mt-8 ${inter.className} bg-[#3898FF]`}
-					disabled={!contractWrite.writeAsync || waitForTransaction.isLoading}
+					disabled={waitForTransaction.isLoading || contractWrite.isLoading}
 					type='submit'
 				>
 					{waitForTransaction.isLoading

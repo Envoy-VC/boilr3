@@ -1,9 +1,30 @@
-import { mainnet, polygon, sepolia, polygonMumbai } from 'wagmi/chains';
+import {
+	mainnet,
+	polygon,
+	sepolia,
+	polygonMumbai,
+	polygonZkEvm,
+	polygonZkEvmTestnet,
+	bsc,
+	bscTestnet,
+	arbitrum,
+	arbitrumGoerli,
+} from 'wagmi/chains';
 
-export const ETH_CHAINS = [mainnet];
+export const ETH_CHAINS = [
+	mainnet,
+	polygon,
+	sepolia,
+	polygonMumbai,
+	polygonZkEvm,
+	polygonZkEvmTestnet,
+	bsc,
+	bscTestnet,
+	arbitrum,
+	arbitrumGoerli,
+];
 export const WALLET_CONNECT_PROJECT_ID =
 	process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '';
-export const PAPER_CLIENT_ID = process.env.NEXT_PUBLIC_PAPER_CLIENT_ID || '';
 
 export const SITE_NAME = 'boilr3';
 export const SITE_DESCRIPTION =

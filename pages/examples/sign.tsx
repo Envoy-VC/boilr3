@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { NextSeo } from 'next-seo';
 import { useAccount, useSignMessage } from 'wagmi';
-import { verifyMessage } from 'ethers/lib/utils';
+import { recoverMessageAddress } from 'viem';
 import toast, { Toaster } from 'react-hot-toast';
 
 import { Navbar, HeadingComponent, CustomButton } from '@/components/layout';
@@ -11,30 +11,34 @@ const inter = Inter({ subsets: ['latin'] });
 
 const Sign = () => {
 	const { address } = useAccount();
-	const recoveredAddress = useRef<string>();
+	const recoveredAddress = React.useRef<string>('');
+
 	const [message, setMessage] = useState<string>(
 		`Sign in with your Ethereum account and let's HODL our way to web3 glory! 🎉 Remember, WAGMI! 🤝`
 	);
 
-	const signMessage = useSignMessage({
-		message,
-		onSuccess(data, variables) {
-			const _address = verifyMessage(variables.message, data);
-			recoveredAddress.current = _address;
-			if (_address === address) {
-				toast.success('Signature Verified');
-			} else {
-				toast.error('Signature Verification Failed');
-			}
-		},
-		onError() {
-			if (address === undefined) {
-				toast.error('Please connect your wallet');
-			} else {
-				toast.error('Signature Declined');
-			}
-		},
-	});
+	const { data, error, isLoading, signMessageAsync, variables } =
+		useSignMessage({
+			message,
+			async onSuccess(data, variables) {
+				const res = await recoverMessageAddress({
+					message: variables?.message,
+					signature: data,
+				});
+				recoveredAddress.current = res;
+				if (recoveredAddress.current === address) {
+					toast.success('Message verified successfully!');
+				}
+			},
+			onError(error) {
+				toast.error(error.message);
+			},
+		});
+
+	const handleSubmit = async () => {
+		signMessageAsync();
+	};
+
 	return (
 		<div>
 			<NextSeo title='Sign Message' />
@@ -53,17 +57,17 @@ const Sign = () => {
 					/>
 
 					<CustomButton
-						text='Sign Message'
-						type='blue'
-						handleClick={signMessage.signMessage}
+						text={isLoading ? 'Check Wallet' : 'Sign Message'}
+						type={isLoading ? 'grey' : 'blue'}
+						handleClick={handleSubmit}
 					/>
-					{signMessage.data && (
+					{data && recoveredAddress.current !== '' && (
 						<div
 							className={`${inter.className} w-full max-w-3xl text-[16px] pt-8 leading-7 break-all`}
 						>
 							<b>Recovered Address</b>: {recoveredAddress.current}
 							<br />
-							<b>Signature</b>: {signMessage.data}
+							<b>Signature</b>: {data}
 						</div>
 					)}
 				</div>
