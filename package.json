@@ -9,6 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
+		"@paperxyz/embedded-wallet-service-rainbowkit": "^0.1.0",
 		"@rainbow-me/rainbowkit": "^0.12.9",
 		"@types/node": "18.15.13",
 		"@types/react": "18.0.38",

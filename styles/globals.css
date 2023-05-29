@@ -31,3 +31,7 @@ body {
 	background: #141414;
 	box-shadow: -20px 20px 43px #121212, 20px -20px 43px #161616;
 }
+
+[data-rk] [aria-labelledby='rk_connect_title'] {
+	z-index: 2147483645 !important;
+}
